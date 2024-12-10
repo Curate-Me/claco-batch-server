@@ -10,17 +10,18 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.Scheduled;
 
 @Configuration
-public class FirstSchedule {
+public class ConcertSchedule {
 
     private final JobLauncher jobLauncher;
     private final JobRegistry jobRegistry;
 
-    public FirstSchedule(JobLauncher jobLauncher, JobRegistry jobRegistry) {
+    public ConcertSchedule(JobLauncher jobLauncher, JobRegistry jobRegistry) {
         this.jobLauncher = jobLauncher;
         this.jobRegistry = jobRegistry;
     }
 
-    @Scheduled(cron = "10 * * * * *", zone = "Asia/Seoul") // 한국시간에 맞춰서 스케줄 실행
+    @Scheduled(cron = "10 * * * * *", zone = "Asia/Seoul")
+    //@Scheduled(cron = "0 0 0 1 * *", zone = "Asia/Seoul")
     public void runFirstJob() throws Exception {
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-hh-mm-ss");
@@ -30,6 +31,6 @@ public class FirstSchedule {
             .addString("date", date)
             .toJobParameters();
 
-        jobLauncher.run(jobRegistry.getJob("firstJob"), jobParameters);
+        jobLauncher.run(jobRegistry.getJob("kopisJob"), jobParameters);
     }
 }
